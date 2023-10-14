@@ -18,7 +18,11 @@
 const { id } = useRoute().params;
 const url = "https://fakestoreapi.com/products/" + id;
 
-const { data: product } = await useFetch(url);
+const { data: product } = await useFetch(url, { key: id });
+
+if (!product.value) {
+  throw createError({ statusCode: 404, statusMessage: "Product Not Found" });
+}
 
 definePageMeta({
   layout: "products",
@@ -26,7 +30,7 @@ definePageMeta({
 </script>
 
 <style lang="scss" scoped>
-  img{
-    max-width: 400px;
-  }
+img {
+  max-width: 400px;
+}
 </style>
